@@ -40,7 +40,7 @@ VALIDATE $? "Enabiling nodejs 20"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing nodejs 20"
 
-id expense
+id expense &>>$LOGFILE
 if [ $? -ne 0 ]
 then
     useradd expense &>>$LOGFILE
@@ -49,12 +49,13 @@ else
     echo -e "$G expense user already there $N"
 fi
 
-mkdir /app
+mkdir -p /app
 
 curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>$LOGFILE
 VALIDATE $? "Downloading backend code to tmp folder"
 
 cd /app
+rm -rf /app/*
 
 unzip /tmp/backend.zip &>>$LOGFILE
 VALIDATE $? "Unzipping backend zip file"
