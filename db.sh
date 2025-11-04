@@ -48,5 +48,15 @@ systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Starting mysql server"
 
 # setting password for root
-mysql_secure_installation --set-root-pass $mysql_root_password &>>$LOGFILE
-VALIDATE $? "Setting root password"
+mysql -h db.aviexpense.online -uroot -p$mysql_root_password -e 'show databases;'
+if [ $? -ne 0 ]
+then
+    mysql_secure_installation --set-root-pass $mysql_root_password &>>$LOGFILE
+    VALIDATE $? "Setting root password"
+else
+    echo -e "$G Root password was already set $N"
+fi
+
+
+
+
