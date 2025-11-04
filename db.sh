@@ -48,7 +48,7 @@ systemctl start mysqld &>>$LOGFILE
 VALIDATE $? "Starting mysql server"
 
 # setting password for root
-mysql -h db.aviexpense.online -uroot -p$mysql_root_password -e 'show databases;'
+mysql -h db.aviexpense.online -uroot -p$mysql_root_password -e 'show databases;' &>>$LOGFILE
 if [ $? -ne 0 ]
 then
     mysql_secure_installation --set-root-pass $mysql_root_password &>>$LOGFILE
