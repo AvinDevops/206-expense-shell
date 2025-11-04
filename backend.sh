@@ -40,8 +40,14 @@ VALIDATE $? "Enabiling nodejs 20"
 dnf install nodejs -y &>>$LOGFILE
 VALIDATE $? "Installing nodejs 20"
 
-useradd expense &>>$LOGFILE
-VALIDATE $? "Installing nodejs 20"
+id expense
+if [ $? -ne 0 ]
+then
+    useradd expense &>>$LOGFILE
+    VALIDATE $? "expense user created"
+else
+    echo -e "$G expense user already there $N"
+fi
 
 mkdir /app
 
